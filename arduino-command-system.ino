@@ -68,8 +68,9 @@ void loop() {
           Serial.print("Got command: ");
           Serial.println(input);
 
-          // Clear out the current command to the value we received
-          currentCommand = input;
+          // Add a new command to the array using the value we received
+          currentCommandArray[currentCommandArrayLength] = input;
+          currentCommandArrayLength++;
         }
       }
     } else if ('F' == currentCommand) {
