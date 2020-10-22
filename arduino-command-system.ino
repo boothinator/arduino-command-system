@@ -57,6 +57,12 @@ void loop() {
         currentCommand = input;
       }
     }
+  } else {
+    Serial.print("Unknown Command: ");
+    Serial.println(currentCommand);
+
+    // Clear out command if we didn't recognize it
+    currentCommand = '\0';
   }
 
 
