@@ -11,6 +11,24 @@ void setup() {
   Serial.begin(9600);
 }
 
+void addCommand(char c) {
+  // Make sure the currentCommandArray has space for the new command
+  if (currentCommandArrayLength < MAX_CURRENT_COMMAND_ARRAY_LENGTH) {
+    // Add a new command to the array using the value we received
+    currentCommandArray[currentCommandArrayLength] = c;
+    currentCommandArrayLength++;
+  } else {
+    Serial.println("Can't add command because array is full");
+  }
+}
+
+void removeCommand(int commandIndex) {
+  // First, replace current command in array with the command at the end of the array
+  currentCommandArray[commandIndex] = currentCommandArray[currentCommandArrayLength - 1];
+  // Then, shorten the length of the array by 1
+  currentCommandArrayLength--;
+}
+
 void loop() {
   Serial.print("Commands: ");
   Serial.write(currentCommandArray, currentCommandArrayLength);
@@ -49,10 +67,7 @@ void loop() {
           Serial.println(input);
 
           // Remove the current command so we can do something else
-          // First, replace current command in array with the command at the end of the array
-          currentCommandArray[currentCommandIndex] = currentCommandArray[currentCommandArrayLength - 1];
-          // Then, shorten the length of the array by 1
-          currentCommandArrayLength--;
+          removeCommand(currentCommandIndex);
         }
       }
     } else if ('S' == currentCommand) {
@@ -71,14 +86,8 @@ void loop() {
           Serial.print("Got command: ");
           Serial.println(input);
 
-          // Make sure the currentCommandArray has space for the new command
-          if (currentCommandArrayLength < MAX_CURRENT_COMMAND_ARRAY_LENGTH) {
-            // Add a new command to the array using the value we received
-            currentCommandArray[currentCommandArrayLength] = input;
-            currentCommandArrayLength++;
-          } else {
-            Serial.println("Can't add command because array is full");
-          }
+          // Add the command
+          addCommand(input);
         }
       }
     } else if ('F' == currentCommand) {
@@ -102,10 +111,7 @@ void loop() {
         driveStartTime = 0;
 
         // Remove the current command so next command can run
-        // First, replace current command in array with the command at the end of the array
-        currentCommandArray[currentCommandIndex] = currentCommandArray[currentCommandArrayLength - 1];
-        // Then, shorten the length of the array by 1
-        currentCommandArrayLength--;
+        removeCommand(currentCommandIndex);
       } else {
         Serial.print("Moving forward for ");
         Serial.print(5000 - (millis() - driveStartTime));
@@ -116,10 +122,7 @@ void loop() {
       Serial.println(currentCommand);
 
       // Remove the command if we didn't recognize it
-      // First, replace current command in array with the command at the end of the array
-      currentCommandArray[currentCommandIndex] = currentCommandArray[currentCommandArrayLength - 1];
-      // Then, shorten the length of the array by 1
-      currentCommandArrayLength--;
+      removeCommand(currentCommandIndex);
     }
   }
 
