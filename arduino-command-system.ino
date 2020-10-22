@@ -1,6 +1,7 @@
-// Keep track of the current command using a single character to represent the command
-// Use the nul character '\0' when there is no command
-char currentCommand = '\0';
+// Keep track of the current commands using a single character to represent the command
+#define MAX_CURRENT_COMMAND_ARRAY_LENGTH 10
+char currentCommandArray[MAX_CURRENT_COMMAND_ARRAY_LENGTH];
+int currentCommandArrayLength = 0;
 
 // Represents time the drive command started running
 // 0 means that command has not started
