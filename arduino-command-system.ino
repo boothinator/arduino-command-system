@@ -14,7 +14,7 @@ void loop() {
   if ('\0' == currentCommand) {
 
     // Use Echo as the default command
-    currentCommand = 'E';
+    currentCommand = 'S';
   }
 
   // Echo command to read from serial port input and output back to serial port
@@ -35,6 +35,26 @@ void loop() {
 
         // Clear out the current command so we can do something else
         currentCommand = '\0';
+      }
+    }
+  } else if ('S' == currentCommand) {
+    // Serial command to read input from serial port and use that as the next command
+
+    // Is there input available?
+    if (Serial.available() > 0) {
+
+      // Input available, lets get the value
+      char input = (char)Serial.read();
+
+      // Only process input if it is not a new-line or carriage-return
+      if (input != '\n' && input != '\r') {
+
+        // Echo input back to serial port
+        Serial.print("Got command: ");
+        Serial.println(input);
+
+        // Clear out the current command to the value we received
+        currentCommand = input;
       }
     }
   }
