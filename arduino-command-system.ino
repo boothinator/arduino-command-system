@@ -48,8 +48,11 @@ void loop() {
           Serial.print("Got value: ");
           Serial.println(input);
 
-          // Clear out the current command so we can do something else
-          currentCommand = '\0';
+          // Remove the current command so we can do something else
+          // First, replace current command in array with the command at the end of the array
+          currentCommandArray[currentCommandIndex] = currentCommandArray[currentCommandArrayLength - 1];
+          // Then, shorten the length of the array by 1
+          currentCommandArrayLength--;
         }
       }
     } else if ('S' == currentCommand) {
@@ -93,8 +96,11 @@ void loop() {
         // Reset drive start time
         driveStartTime = 0;
 
-        // Clear out current command so next command can run
-        currentCommand = '\0';
+        // Remove the current command so next command can run
+        // First, replace current command in array with the command at the end of the array
+        currentCommandArray[currentCommandIndex] = currentCommandArray[currentCommandArrayLength - 1];
+        // Then, shorten the length of the array by 1
+        currentCommandArrayLength--;
       } else {
         Serial.print("Moving forward for ");
         Serial.print(5000 - (millis() - driveStartTime));
@@ -104,8 +110,11 @@ void loop() {
       Serial.print("Unknown Command: ");
       Serial.println(currentCommand);
 
-      // Clear out command if we didn't recognize it
-      currentCommand = '\0';
+      // Remove the command if we didn't recognize it
+      // First, replace current command in array with the command at the end of the array
+      currentCommandArray[currentCommandIndex] = currentCommandArray[currentCommandArrayLength - 1];
+      // Then, shorten the length of the array by 1
+      currentCommandArrayLength--;
     }
   }
 
