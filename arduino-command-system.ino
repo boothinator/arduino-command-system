@@ -12,6 +12,16 @@ void setup() {
 }
 
 void loop() {
+
+  // Set the current command to the default command when no command is running
+  if (0 == currentCommandArrayLength) {
+
+    // Use Echo as the default command
+    // Add it to the array and increase length of the array
+    currentCommandArray[0] = 'S';
+    currentCommandArrayLength++;
+  }
+
   // Process every command in the array
   for (int currentCommandIndex = 0; currentCommandIndex < currentCommandArrayLength; currentCommandIndex++) {
 
@@ -20,13 +30,6 @@ void loop() {
 
     Serial.print("Current Command: ");
     Serial.println(currentCommand);
-
-    // Set the current command to the default command when no command is running
-    if ('\0' == currentCommand) {
-
-      // Use Echo as the default command
-      currentCommand = 'S';
-    }
 
     // Echo command to read from serial port input and output back to serial port
     if ('E' == currentCommand) {
