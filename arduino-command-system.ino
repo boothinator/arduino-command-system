@@ -2,6 +2,10 @@
 // Use the nul character '\0' when there is no command
 char currentCommand = '\0';
 
+// Represents time the drive command started running
+// 0 means that command has not started
+unsigned long driveStartTime = 0;
+
 void setup() {
   Serial.begin(9600);
 }
@@ -56,6 +60,33 @@ void loop() {
         // Clear out the current command to the value we received
         currentCommand = input;
       }
+    }
+  } else if ('F' == currentCommand) {
+    // Move robot forward for 5 seconds
+    // Note: this is simulated for now. Only outputs to serial port and doesn't drive motors
+
+    // We need to start driving if driveStartTime is 0
+    if (0 == driveStartTime) {
+      Serial.println("Starting to move forward");
+
+      // Record the time we started driving
+      // Time is the number of milliseconds since program started running
+      driveStartTime = millis();
+
+    } else if ((millis() - driveStartTime) > 5000) {
+      // It's been more than 5 seconds (5000 milliseconds)
+      // Time to stop driving
+      Serial.println("Stopping forward movement");
+
+      // Reset drive start time
+      driveStartTime = 0;
+
+      // Clear out current command so next command can run
+      currentCommand = '\0';
+    } else {
+      Serial.print("Moving forward for ");
+      Serial.print(5000 - (millis() - driveStartTime));
+      Serial.println(" more milliseconds");
     }
   } else {
     Serial.print("Unknown Command: ");
