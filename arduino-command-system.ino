@@ -7,6 +7,9 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  Serial.print("Current Command: ");
+  Serial.println(currentCommand);
 
+  // Include a delay so we can see how the system works
+  delay(1000);
 }
