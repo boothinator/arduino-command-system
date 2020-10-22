@@ -26,7 +26,7 @@ void loop() {
   }
 
   // Process every command in the array
-  for (int currentCommandIndex = 0; currentCommandIndex < currentCommandArrayLength; currentCommandIndex++) {
+  for (int currentCommandIndex = currentCommandArrayLength - 1; currentCommandIndex >= 0; currentCommandIndex--) {
 
     // Store the current command in a convenience variable
     // Note: this variable should not change in this loop
