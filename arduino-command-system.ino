@@ -26,7 +26,8 @@ void loop() {
   for (int currentCommandIndex = 0; currentCommandIndex < currentCommandArrayLength; currentCommandIndex++) {
 
     // Store the current command in a convenience variable
-    char currentCommand = currentCommandArray[currentCommandIndex];
+    // Note: this variable should not change in this loop
+    const char currentCommand = currentCommandArray[currentCommandIndex];
 
     Serial.print("Current Command: ");
     Serial.println(currentCommand);
