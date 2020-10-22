@@ -71,9 +71,14 @@ void loop() {
           Serial.print("Got command: ");
           Serial.println(input);
 
-          // Add a new command to the array using the value we received
-          currentCommandArray[currentCommandArrayLength] = input;
-          currentCommandArrayLength++;
+          // Make sure the currentCommandArray has space for the new command
+          if (currentCommandArrayLength < MAX_CURRENT_COMMAND_ARRAY_LENGTH) {
+            // Add a new command to the array using the value we received
+            currentCommandArray[currentCommandArrayLength] = input;
+            currentCommandArrayLength++;
+          } else {
+            Serial.println("Can't add command because array is full");
+          }
         }
       }
     } else if ('F' == currentCommand) {
