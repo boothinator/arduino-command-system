@@ -10,6 +10,13 @@ void loop() {
   Serial.print("Current Command: ");
   Serial.println(currentCommand);
 
+  // Set the current command to the default command when no command is running
+  if ('\0' == currentCommand) {
+
+    // Use Echo as the default command
+    currentCommand = 'E';
+  }
+
   // Echo command to read from serial port input and output back to serial port
   if ('E' == currentCommand) {
 
