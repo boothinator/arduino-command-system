@@ -12,6 +12,9 @@ void setup() {
 }
 
 void loop() {
+  Serial.print("Commands: ");
+  Serial.write(currentCommandArray, currentCommandArrayLength);
+  Serial.println();
 
   // Set the current command to the default command when no command is running
   if (0 == currentCommandArrayLength) {
@@ -28,9 +31,6 @@ void loop() {
     // Store the current command in a convenience variable
     // Note: this variable should not change in this loop
     const char currentCommand = currentCommandArray[currentCommandIndex];
-
-    Serial.print("Current Command: ");
-    Serial.println(currentCommand);
 
     // Echo command to read from serial port input and output back to serial port
     if ('E' == currentCommand) {
